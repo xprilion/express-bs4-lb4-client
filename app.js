@@ -39,7 +39,7 @@ app.use("/", indexRouter);
 app.use("/products", productsRouter);
 app.use("/categories", categoriesRouter);
 
-app.locals.api = "http://127.0.0.1:3000";
+app.locals.api = "https://xprilion-lb4-jwt-roles-products.glitch.me";
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
