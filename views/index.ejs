@@ -1,0 +1,93 @@
+<%- include('partials/header', {title: title, loggedin: loggedin}); %>
+<body>
+  <main role="main" class="container">
+    <% if (loggedin != true ) { %>
+    <div class="container">
+      <div class="row">
+        <div>
+          <h1>Demo Admin</h1>
+          <div>
+            Login to get started.<br />
+            <br />
+            <br />
+            <br />
+            <br />
+          </div>
+          <div>
+            <a href="/login" class="btn btn-primary">
+              <i class="icon-home icon-white"></i> Login
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%} else { %>
+    <div style="padding: 1rem; width: 100%;">
+      <div class="btn-group" role="group" aria-label="Action buttons">
+        <button type="button" class="btn btn-secondary active">All</button>
+        <% if(admin==true){ %>
+        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modal">Add</button>
+        <% } %>
+      </div>
+    </div>
+    <div class="product-list">
+      <div class="row">
+        <% items.forEach(function(item){ %>
+        <div class="col-md-4 col-sm-6">
+          <div class="white-box">
+            <div class="product-img">
+              <img src="<%= item.image %>" />
+            </div>
+            <div class="product-bottom">
+              <div class="product-name"><%= item.name %></div>
+              <div class="price">
+                <span class="rupee-icon">₹</span><%= item.price %>
+              </div>
+              <a href="#" class="blue-btn">Add to cart</a>
+              <a href="products/<%= item._id %>" class="btn btn-default"
+                >Details</a
+              >
+            </div>
+          </div>
+        </div>
+        <% }); %>
+      </div>
+    </div>
+    <% } %>
+  </main>
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="modal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="modalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalLabel">Modal title</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+            Close
+          </button>
+          <button type="button" class="btn btn-primary btn-sm">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%- include('partials/footer'); %>
+</body>
