@@ -1,4 +1,5 @@
-<%- include('partials/header', {title: title, loggedin: loggedin, categories: categories}); %>
+<%- include('partials/header', {title: title, loggedin: loggedin, categories:
+categories}); %>
 <body>
   <main role="main" class="container">
     <% if (loggedin != true ) { %>
@@ -26,7 +27,14 @@
       <div class="btn-group" role="group" aria-label="Action buttons">
         <button type="button" class="btn btn-secondary active">All</button>
         <% if(admin==true){ %>
-        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modal">Add</button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-toggle="modal"
+          data-target="#modal"
+        >
+          Add
+        </button>
         <% } %>
       </div>
     </div>
@@ -44,7 +52,7 @@
                 <span class="rupee-icon">₹</span><%= item.price %>
               </div>
               <a href="#" class="blue-btn">Add to cart</a>
-              <a href="products/<%= item._id %>" class="btn btn-default"
+              <a href="products/<%= item.id %>" class="btn btn-default"
                 >Details</a
               >
             </div>
@@ -65,28 +73,87 @@
     aria-hidden="true"
   >
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalLabel">Modal title</h5>
-          <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
+      <form action="/products" method="post">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalLabel">Add Product</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="exampleFormControlInput1">Product Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="exampleFormControlInput1"
+                placeholder="Big big car"
+                name="name"
+              />
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlInput5">Image Link</label>
+              <input
+                type="text"
+                class="form-control"
+                id="exampleFormControlInput5"
+                placeholder="https://source.unsplash.com/collection/11379911/"
+                name="image"
+              />
+            </div>
+            <div class="row">
+              <div class="col">
+                <input type="number" class="form-control" placeholder="Price" name="price">
+              </div>
+              <div class="col">
+                <input type="number" class="form-control" placeholder="Stock" name="stock">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlSelect2"
+                >Categories</label
+              >
+              <select
+                multiple
+                class="form-control"
+                id="exampleFormControlSelect2"
+                name="categories"
+              >
+                <% categories.forEach(function(item){ %>
+                <option value="<%=item.id%>"><%=item.name%></option>
+                <% }) %>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Description</label>
+              <textarea
+                class="form-control"
+                id="exampleFormControlTextarea1"
+                rows="3"
+                name="description"
+              ></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary btn-sm"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="submit" class="btn btn-primary btn-sm">
+              Save changes
+            </button>
+          </div>
         </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
-            Close
-          </button>
-          <button type="button" class="btn btn-primary btn-sm">Save changes</button>
-        </div>
-      </div>
+      </form>
     </div>
   </div>
   <%- include('partials/footer'); %>
