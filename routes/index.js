@@ -3,22 +3,33 @@ var router = express.Router();
 var helpers = require("../helpers");
 var axios = require("axios");
 
-/* GET home page. */
 router.get("/", function (req, res, next) {
   if (helpers.jwt(req.session.token)) {
-    var items = [];
+    var products = [];
+    var categories = [];
+
+    axios
+      .get(req.app.locals.api + "/categories", {
+        headers: { "Authorization": "Bearer "+req.session.token },
+      })
+      .then((response) => {
+        categories = response.data;
+      });
+
     axios
       .get(req.app.locals.api + "/products", {
         headers: { "Authorization": "Bearer "+req.session.token },
       })
       .then((response) => {
-        items = response.data;
+        products = response.data;
       });
+
     res.render("index", {
       title: "View Products",
       loggedin: true,
       admin: req.session.user.role === "admin",
-      items: items,
+      products: products,
+      categories: categories
     });
   } else {
     res.render("index", { title: "Home", loggedin: false });

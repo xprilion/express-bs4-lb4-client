@@ -1,0 +1,37 @@
+<%- include('partials/header', {title: title, loggedin: loggedin}); %>
+<body>
+  <main role="main" class="container">
+    <div style="padding: 1rem; width: 100%;">
+        <div class="btn-group" role="group" aria-label="Action buttons">
+          <button type="button" class="btn btn-secondary active">All</button>
+          <% if(admin==true){ %>
+          <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modal">Add</button>
+          <% } %>
+        </div>
+      </div>
+      <div class="product-list">
+        <div class="row">
+          <% items.forEach(function(item){ %>
+          <div class="col-md-4 col-sm-6">
+            <div class="white-box">
+              <div class="product-img">
+                <img src="<%= item.image %>" />
+              </div>
+              <div class="product-bottom">
+                <div class="product-name"><%= item.name %></div>
+                <div class="price">
+                  <span class="rupee-icon">₹</span><%= item.price %>
+                </div>
+                <a href="#" class="blue-btn">Add to cart</a>
+                <a href="products/<%= item._id %>" class="btn btn-default"
+                  >Details</a
+                >
+              </div>
+            </div>
+          </div>
+          <% }); %>
+        </div>
+      </div>
+    </main>
+    <%- include('partials/footer'); %>
+</body>

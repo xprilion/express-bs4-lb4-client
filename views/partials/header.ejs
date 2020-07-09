@@ -40,11 +40,12 @@
           <% if(loggedin==true){ %>
           <li class="nav-item dropdown">
             <a class="nav-link btn  btn-default dropdown-toggle" href="#" data-toggle="dropdown">
-              Catgories
+              Categories
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#"> Menu item 1</a></li>
-              <li><a class="dropdown-item" href="#"> Menu item 2 </a></li>
+              <% categories.forEach(function(item){ %>
+              <li><a class="dropdown-item" href="">item.name</a></li>
+              <% }) %>
             </ul>
           </li>
           <li class="nav-item">

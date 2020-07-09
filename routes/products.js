@@ -3,25 +3,38 @@ var router = express.Router();
 var helpers = require("../helpers");
 var axios = require("axios");
 
-router.post('/', function(req, res, next) {
+router.post('/:id', function(req, res, next) {
   if (helpers.jwt(req.session.token)) {
+
+    var categories = [];
+
+    var products = [];
+
     axios
-      .post(req.app.locals.api + "/products", 
-      {
-        name: req.body.name,
-        image: req.body.name,
-        description: req.body.name,
-        price: req.body.name,
-        stock: req.body.name,
-        categories: req.body.categories
-      },
+      .get(req.app.locals.api + "/categories", {
+        headers: { "Authorization": "Bearer "+req.session.token },
+      })
+      .then((response) => {
+        categories = response.data;
+      });
+
+    axios
+      .get(req.app.locals.api + "/products/"+req.params.id,
       {
         headers: { "Authorization": "Bearer "+req.session.token },
       })
       .then((response) => {
-        console.log(response);
+        products = response.data;
       });
-    res.redirect("/products");
+
+    res.render("products/one", {
+      title: "View Item",
+      loggedin: true,
+      admin: req.session.user.role === "admin",
+      products: products,
+      categories: categories
+    });
+
   } else {
     res.redirect("/logout");
   }
