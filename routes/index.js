@@ -32,7 +32,7 @@ router.get("/", function (req, res, next) {
       categories: categories
     });
   } else {
-    res.render("index", { title: "Home", loggedin: false });
+    res.render("index", { title: "Home", loggedin: false, categories: [] });
   }
 });
 
