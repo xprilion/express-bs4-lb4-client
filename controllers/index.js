@@ -1,7 +1,12 @@
 const helpers = require("../helpers");
 const axios = require("axios");
 
-// Controller for GET request to '/' route
+/**
+ * Controller for GET request to '/' route
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 exports.getRootController = (req, res, next) => {
   if (helpers.jwt(req.session.token)) {
     var products = [];
@@ -34,8 +39,31 @@ exports.getRootController = (req, res, next) => {
   }
 };
 
-// Controller for POST request to '/login' route
-exports.loginController = (req, res, next) => {
+/**
+ * Controller for GET request to '/login' route
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+exports.getLoginController = (req, res, next) => {
+  if (!helpers.jwt(req.session.token)) {
+    res.render("auth/login", {
+      title: "Login",
+      api: req.app.locals.api,
+      loggedin: false,
+    });
+  } else {
+    res.redirect("/");
+  }
+};
+
+/**
+ * Controller for POST request to '/login' route
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+exports.postLoginController = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
   axios
@@ -51,7 +79,12 @@ exports.loginController = (req, res, next) => {
     });
 };
 
-// Controller for GET request to '/logout' route
+/**
+ * Controller for GET request to '/logout' route
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 exports.logoutController = (req, res, next) => {
   req.session.destroy();
   res.redirect("/");
