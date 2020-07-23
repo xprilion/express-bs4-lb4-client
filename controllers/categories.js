@@ -1,7 +1,12 @@
 const helpers = require("../helpers");
 const axios = require("axios");
 
-// Controller for POST request to '/categories'
+/**
+ * Controller for POST request to '/categories'
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 exports.postCategoriesController = (req, res, next) => {
   if (helpers.jwt(req.session.token)) {
     axios

@@ -1,7 +1,12 @@
 const helpers = require("../helpers");
 const axios = require("axios");
 
-// Controller for GET request to '/products/:id'
+/**
+ * Controller for GET request to '/products/:id'
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 exports.getProdcutsByIdController = (req, res, next) => {
   if (helpers.jwt(req.session.token)) {
     var categories = [];
@@ -36,7 +41,12 @@ exports.getProdcutsByIdController = (req, res, next) => {
   }
 };
 
-//Controller for POST request to '/products'
+/**
+ * Controller for POST request to '/products'
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 exports.postProductsController = (req, res, next) => {
   if (helpers.jwt(req.session.token)) {
     var cats = req.body.categories;
